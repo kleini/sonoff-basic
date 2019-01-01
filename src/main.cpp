@@ -45,6 +45,14 @@ void loopHandler() {
     }
 }
 
+void onHomieEvent(const HomieEvent & event) {
+  switch (event.type) {
+    case HomieEventType::WIFI_DISCONNECTED:
+      WiFi.disconnect();
+      break;
+  }
+}
+
 void setup() {
     Serial.begin(115200);
     Serial << endl << endl;
@@ -59,6 +67,7 @@ void setup() {
     switchNode.advertise("on").settable(switchOnHandler);
 
     Homie.setLoopFunction(loopHandler);
+    Homie.onEvent(onHomieEvent);
     Homie.setup();
 }
 
