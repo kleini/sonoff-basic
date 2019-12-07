@@ -1,3 +1,6 @@
+#define FW_NAME "Sonoff Basic"
+#define FW_VERSION "1.1.0"
+
 #include <Homie.h>
 
 const int PIN_RELAY = 12;
@@ -8,7 +11,7 @@ unsigned long buttonDownTime = 0;
 byte lastButtonState = 1;
 byte buttonPressHandled = 0;
 
-HomieNode switchNode("switch", "switch");
+HomieNode switchNode("switch", "switch", "switch");
 
 bool switchOnHandler(HomieRange range, String value) {
     if (value != "true" && value != "false") return false;
@@ -50,6 +53,8 @@ void onHomieEvent(const HomieEvent & event) {
     case HomieEventType::WIFI_DISCONNECTED:
       WiFi.disconnect();
       break;
+    default:
+      break;
   }
 }
 
@@ -61,8 +66,9 @@ void setup() {
     pinMode(PIN_BUTTON, INPUT);
     digitalWrite(PIN_RELAY, LOW);
 
-    Homie_setFirmware("itead-sonoff-basic", "1.0.0");
-    Homie.setLedPin(PIN_LED, LOW).setResetTrigger(PIN_BUTTON, LOW, 5000);
+    Homie_setFirmware(FW_NAME, FW_VERSION);
+    Homie.setResetTrigger(PIN_BUTTON, LOW, 5000);
+    Homie.setLedPin(PIN_LED, LOW);
 
     switchNode.advertise("on").settable(switchOnHandler);
 
