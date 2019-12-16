@@ -1,5 +1,5 @@
 #define FW_NAME "Sonoff Basic"
-#define FW_VERSION "1.1.0"
+#define FW_VERSION "1.1.1"
 
 #include <Homie.h>
 
