@@ -1,0 +1,16 @@
+language: python
+dist: bionic
+python:
+  - "3.8"
+
+cache:
+  directories:
+    - ~/.platformio
+
+install:
+  - pip install -U platformio
+  - platformio update
+
+script:
+  - platformio run 
+
